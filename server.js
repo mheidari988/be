@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const tutorialController = require("./app/controllers/tutorial.Controller");
 
 var corsOptions = {
   origin: "http://localhost:8081",
@@ -27,6 +28,15 @@ db.mongoose
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the application" });
 });
+
+app
+  .route("/api/tutorials")
+  .post(tutorialController.create)
+  .get(tutorialController.findAll)
+  .delete(tutorialController.deleteAll);
+
+app.route("/api/tutorials/:id")
+  .get(tutorialController.delete);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
